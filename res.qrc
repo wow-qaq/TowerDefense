@@ -1,0 +1,14 @@
+<RCC>
+    <qresource prefix="/">
+        <file>res/images/Begin Button.jfif</file>
+        <file>res/images/Enemy.png</file>
+        <file>res/images/Tower.png</file>
+        <file>res/images/Road.png</file>
+        <file>res/images/Welcome.jfif</file>
+        <file>res/images/TowerPlace.png</file>
+        <file>res/images/map.jfif</file>
+        <file>res/images/begin.jfif</file>
+        <file>res/images/first.png</file>
+        <file>res/images/second.png</file>
+    </qresource>
+</RCC>
