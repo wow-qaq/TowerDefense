@@ -8,31 +8,45 @@
 #include <QPainter>
 #include <QTime>
 #include <QTimer>
-#include <QPropertyAnimation>
+#include <QVector2D>
+#include "gamewindow.h"
+#include "choosebutton.h"
 
+class GameWindow;
 class Enemy : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(QPoint _cpos READ get_cpos WRITE set_cpos)
 public:
     Enemy();
-    Enemy(QPoint spos,QPoint epos, QString pixFileName);
+    Enemy(QPoint spos,QPoint epos,GameWindow *game, QString pixFileName);
+    ~Enemy();
     void drawe(QPainter *painter);
-    void alive();
     QPoint get_cpos();
     void set_cpos(QPoint pos);
+    void emove();
+    void getDamage(int damage);
+    void getRemoved();
+    void getAttacked(Tower * attacker);
+    void gotLostSight(Tower * attacker);
+    QPoint pos() const;
+public slots:
+    void doActive();
 private:
     QPoint _spos;
     QPoint _epos;
     QPoint _cpos;
     QPixmap pixmap;
-    QTimer *life;
-    int speed;
+    double speed;
+    bool _active;
+    int _maxHp;
+    int _currentHp;
+    GameWindow * _game;
+    QList<Tower*> _attacklist;
+    static const QSize _fixedSize;
 
 signals:
 
 public slots:
-    void emove();
 };
 
 #endif // ENEMY_H

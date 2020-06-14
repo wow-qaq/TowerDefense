@@ -30,7 +30,10 @@ SOURCES += \
     mybutton.cpp \
     tower.cpp \
     enemy.cpp \
-    menu.cpp
+    menu.cpp \
+    choosebutton.cpp \
+    waypoint.cpp \
+    tower2.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -38,7 +41,10 @@ HEADERS += \
     mybutton.h \
     tower.h \
     enemy.h \
-    menu.h
+    menu.h \
+    choosebutton.h \
+    waypoint.h \
+    tower2.h
 
 FORMS += \
         mainwindow.ui
