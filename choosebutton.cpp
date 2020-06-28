@@ -17,12 +17,24 @@ ChooseButton::ChooseButton(QString filename) : QPushButton(0),pixmap(filename)
     action3->setText("升级");
     this->addAction(action3);
     QAction *action4 = new QAction(this);
-    action4->setText("拆除");
+    action4->setText("拆除攻击塔");
     this->addAction(action4);
+    QAction *action5 = new QAction(this);
+    action5->setText("拆除减速塔");
+    this->addAction(action5);
     connect(action1,QAction::triggered,this,[=](){
-            emit choosetower();
+        emit choosetower();
     });
     connect(action2,QAction::triggered,this,[=](){
-            emit choosetower2();
+        emit choosetower2();
+    });
+    connect(action3,QAction::triggered,this,[=](){
+        emit levelup();
+    });
+    connect(action4,QAction::triggered,this,[=](){
+        emit removetower();
+    });
+    connect(action5,QAction::triggered,this,[=](){
+        emit removetower2();
     });
 }

@@ -6,19 +6,18 @@
 #include <QPixmap>
 #include <QString>
 #include <QPainter>
+#include "tower.h"
 
-class Tower2 : public QObject
+class Tower2 : public Tower
 {
-    Q_OBJECT
 public:
     Tower2(QPoint pos, QString pixFileName);
-    void draw(QPainter *painter);
+    QPoint getpos2();
 private:
-    QPoint _pos;
+    QPoint _pos2;
     QPixmap pixmap;
     int m_attackRange;
-    int m_damage;
-    int m_fireRate;
+    int currentHP;
 signals:
 
 public slots:

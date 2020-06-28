@@ -18,6 +18,9 @@ private:
 signals:
     void choosetower();
     void choosetower2();
+    void removetower();
+    void removetower2();
+    void levelup();
 public slots:
 };
 

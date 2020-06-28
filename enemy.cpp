@@ -9,7 +9,6 @@ Enemy::Enemy(QPoint spos, QPoint epos, GameWindow *game, QString pixFileName):
     _spos(spos),
     _epos(epos),
     pixmap(pixFileName),
-    _active(true),
     _maxHp(30),
     _currentHp(30),
     _game(game)
@@ -22,19 +21,21 @@ Enemy::~Enemy(){
     _game=NULL;
 }
 
-void Enemy::doActive(){
-    _active=true;
-}
-
 void Enemy::emove(){
+    if(_cpos==_epos)
+        _game->life--;
+    if(getDistance(_cpos,_game->lvtower_list)<=100)
+        getDamage(8);
+    if(getDistance(_cpos,_game->tower_list)<=100)
+        getDamage(4);
+    if(getDistance(_cpos,_game->tower2_list)<=100)
+        getLower();
     QVector2D enemy(_epos - _spos);
     enemy.normalize();
     _cpos=_cpos+enemy.toPoint()*speed;
 }
 
 void Enemy::drawe(QPainter *painter){
-    if(!_active)
-        return;
     painter->save();
     QPoint healthBarPoint = _cpos+QPoint(-HP_BAR/2-5,-_fixedSize.height());
     painter->setPen(Qt::NoPen);
@@ -50,35 +51,77 @@ void Enemy::drawe(QPainter *painter){
     painter->restore();
 }
 
-QPoint Enemy::get_cpos(){
-    return this->_cpos;
-}
-
-void Enemy::set_cpos(QPoint pos){
-    this->_cpos=pos;
-}
-
 void Enemy::getDamage(int damage){
-    _currentHp-=damage;
-    if(_currentHp<=0){
+    if(_currentHp>0)
+        _currentHp-=damage;
+    else
         getRemoved();
-    }
+}
+
+void Enemy::getLower(){
+    speed-=10;
+    _currentHp-=1;
 }
 
 void Enemy::getRemoved(){
-    if(_attacklist.empty()){
-        return;
+    _game->money+=50;
+    _game->removeEnemy(this);
+}
+
+void Enemy::attack(){
+    if(getDistance(_cpos,_game->tower_list)<=75)
+        _game->tower_list[0]->getattack();
+    if(getDistance(_cpos,_game->tower2_list)<=75)
+        _game->tower2_list[0]->getattack();
+}
+
+double Enemy::getDistance(QPoint cpos, QList<Tower*>towerlist){
+    double distance[4]={1000,1000,1000,1000},dx[4]={1000,1000,1000,1000},dy[4]={1000,1000,1000,1000};
+    int i,min=1000;
+    for(i=0;i!=towerlist.size();i++){
+        dx[i]=cpos.x()-towerlist[i]->getpos().x();
+        dy[i]=cpos.y()-towerlist[i]->getpos().y();
+        distance[i]=sqrt(dx[i]*dx[i]+dy[i]*dy[i]);
     }
-//    foreach(Tower * tower, _attacklist)
-//        tower->targetKilled();
-//    _game->goldNum+=100;
-//    _game->removeEnemy(this);
+    for(i=0;i<4;i++){
+        if(distance[i]<min)
+            min=distance[i];
+    }
+    return min;
 }
 
-void Enemy::getAttacked(Tower *attacker){
-    _attacklist.push_back(attacker);
+double Enemy::getDistance(QPoint cpos, QList<Tower2*>tower2list){
+    double distance[4]={1000,1000,1000,1000},dx[4]={1000,1000,1000,1000},dy[4]={1000,1000,1000,1000};
+    int i=0,min=1000;
+    for(i=0;i!=tower2list.size();i++){
+        dx[i]=cpos.x()-tower2list[i]->getpos2().x();
+        dy[i]=cpos.y()-tower2list[i]->getpos2().y();
+        distance[i]=sqrt(dx[i]*dx[i]+dy[i]*dy[i]);
+    }
+    for(i=0;i<4;i++){
+        if(distance[i]<min)
+            min=distance[i];
+    }
+    return min;
 }
 
-void Enemy::gotLostSight(Tower *attacker){
-    _attacklist.removeOne(attacker);
+double Enemy::getDistance(QPoint cpos, QList<LvTower*>lvtowerlist){
+    double distance[4]={1000,1000,1000,1000},dx[4]={1000,1000,1000,1000},dy[4]={1000,1000,1000,1000};
+    int i=0,min=1000;
+    for(i=0;i!=lvtowerlist.size();i++){
+        dx[i]=cpos.x()-lvtowerlist[i]->getpos().x();
+        dy[i]=cpos.y()-lvtowerlist[i]->getpos().y();
+        distance[i]=sqrt(dx[i]*dx[i]+dy[i]*dy[i]);
+    }
+    for(i=0;i<4;i++){
+        if(distance[i]<min)
+            min=distance[i];
+    }
+    return min;
+}
+
+void Enemy::change(){
+    _maxHp=50;
+    _currentHp=50;
+    speed=50;
 }

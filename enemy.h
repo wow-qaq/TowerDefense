@@ -11,8 +11,12 @@
 #include <QVector2D>
 #include "gamewindow.h"
 #include "choosebutton.h"
+#include "tower.h"
+#include "tower2.h"
+#include "lvtower.h"
 
 class GameWindow;
+class Tower;
 class Enemy : public QObject
 {
     Q_OBJECT
@@ -21,27 +25,25 @@ public:
     Enemy(QPoint spos,QPoint epos,GameWindow *game, QString pixFileName);
     ~Enemy();
     void drawe(QPainter *painter);
-    QPoint get_cpos();
-    void set_cpos(QPoint pos);
     void emove();
     void getDamage(int damage);
+    void getLower();
     void getRemoved();
-    void getAttacked(Tower * attacker);
-    void gotLostSight(Tower * attacker);
+    void change();
+    void attack();
+    double getDistance(QPoint cpos, QList<Tower*>towerlist);
+    double getDistance(QPoint cpos, QList<Tower2*>tower2list);
+    double getDistance(QPoint cpos, QList<LvTower*>lvtowerlist);
     QPoint pos() const;
-public slots:
-    void doActive();
 private:
     QPoint _spos;
     QPoint _epos;
     QPoint _cpos;
     QPixmap pixmap;
     double speed;
-    bool _active;
     int _maxHp;
     int _currentHp;
     GameWindow * _game;
-    QList<Tower*> _attacklist;
     static const QSize _fixedSize;
 
 signals:

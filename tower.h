@@ -13,12 +13,14 @@ class Tower : public QObject
 public:
     Tower(QPoint pos, QString pixFileName);
     void draw(QPainter *painter);
+    void getattack();
+    int getHP();
+    QPoint getpos();
 private:
     QPoint _pos;
     QPixmap pixmap;
     int m_attackRange;
-    int m_damage;
-    int m_fireRate;
+    int currentHP;
 
 signals:
 

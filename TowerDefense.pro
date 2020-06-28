@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui multimedia network
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -32,8 +32,9 @@ SOURCES += \
     enemy.cpp \
     menu.cpp \
     choosebutton.cpp \
-    waypoint.cpp \
-    tower2.cpp
+    tower2.cpp \
+    lvtower.cpp \
+    winwindow.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -43,8 +44,9 @@ HEADERS += \
     enemy.h \
     menu.h \
     choosebutton.h \
-    waypoint.h \
-    tower2.h
+    tower2.h \
+    lvtower.h \
+    winwindow.h
 
 FORMS += \
         mainwindow.ui
