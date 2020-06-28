@@ -24,10 +24,12 @@ Enemy::~Enemy(){
 void Enemy::emove(){
     if(_cpos==_epos)
         _game->life--;
-    if(getDistance(_cpos,_game->lvtower_list)<=100)
-        getDamage(8);
-    if(getDistance(_cpos,_game->tower_list)<=100)
-        getDamage(4);
+    if(getDistance(_cpos,_game->lvtower_list)<=100){
+        getDamage(6);
+    }
+    if(getDistance(_cpos,_game->tower_list)<=100){
+        getDamage(3);
+    }
     if(getDistance(_cpos,_game->tower2_list)<=100)
         getLower();
     QVector2D enemy(_epos - _spos);
@@ -59,7 +61,7 @@ void Enemy::getDamage(int damage){
 }
 
 void Enemy::getLower(){
-    speed-=10;
+    speed=15;
     _currentHp-=1;
 }
 
@@ -120,8 +122,8 @@ double Enemy::getDistance(QPoint cpos, QList<LvTower*>lvtowerlist){
     return min;
 }
 
-void Enemy::change(){
-    _maxHp=50;
-    _currentHp=50;
-    speed=50;
+void Enemy::change(int addHP, int addSpeed){
+    _maxHp=_maxHp+addHP;
+    _currentHp=_maxHp;
+    speed=speed+addSpeed;
 }

@@ -29,7 +29,7 @@ public:
     void getDamage(int damage);
     void getLower();
     void getRemoved();
-    void change();
+    void change(int addHP, int addSpeed);
     void attack();
     double getDistance(QPoint cpos, QList<Tower*>towerlist);
     double getDistance(QPoint cpos, QList<Tower2*>tower2list);

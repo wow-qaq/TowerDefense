@@ -50,6 +50,7 @@ signals:
 public slots:
     void set_enemy();
     void set_enemy2();
+    void set_enemy3();
     void updatescene();
 };
 

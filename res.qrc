@@ -16,5 +16,6 @@
         <file>res/images/Win.jpg</file>
         <file>res/images/Enemy2.jpg</file>
         <file>res/music/back.mp3</file>
+        <file>res/images/Enemy3.png</file>
     </qresource>
 </RCC>

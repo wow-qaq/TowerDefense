@@ -95,17 +95,35 @@ void GameWindow::set_enemy(){
 
 void GameWindow::set_enemy2(){
     Enemy *new_enemy2 = new Enemy(QPoint(75,325),QPoint(800,325),this,":/res/images/Enemy2.jpg");
-    new_enemy2->change();
+    new_enemy2->change(20,15);
     enemy_list.push_back(new_enemy2);
     update();
 }
 
+void GameWindow::set_enemy3(){
+    Enemy *new_enemy3 = new Enemy(QPoint(75,325),QPoint(800,325),this,":/res/images/Enemy3.png");
+    new_enemy3->change(30,-5);
+    enemy_list.push_back(new_enemy3);
+    update();
+}
+
 void GameWindow::updatescene(){
-    if(count<15){
+    if(count<30&&count%2==0){
         this->set_enemy();
         count++;
     }
-    else if(count>=15&&count<=25){
+    else if(count<30&&count%2!=0){
+        count++;
+    }
+    else if(count>=30&&count<=45&&count%3==0){
+        this->set_enemy3();
+        count++;
+    }
+    else if(count>=30&&count<=45&&count%3!=0)
+    {
+        count++;
+    }
+    else if(count>45&&count<=50){
         this->set_enemy2();
         count++;
     }
@@ -132,7 +150,7 @@ void GameWindow::updatescene(){
 void GameWindow::showtext(QPainter *painter){
     painter->save();
     painter->setPen(Qt::red);
-    painter->drawText(QRect(0,0,75,50),QString("life:%1 money:%2").arg(life).arg(money));
+    painter->drawText(QRect(0,0,75,100),QString("life:%1 money:%2 注意：请在木桩处点击鼠标右键展开菜单").arg(life).arg(money));
     painter->restore();
 }
 
